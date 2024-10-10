@@ -78,8 +78,8 @@ def function():
                 result = list_letter[list_num.index(result)]
                 print(result)
                 break
-
-
+        else:
+            print('Ошибка при вводе операции')
 
 function()
 input('Введите Enter для выхода')
