@@ -48,7 +48,7 @@ for num in list_num[1:]:
 def function():
     while True:
         calc = input('Введите арифметическую операцию: ')
-        if fnmatch(calc, '* плюс *') == 1:
+        if fnmatch(calc, '* плюс *'):
             calc = calc.split(' плюс ')
             if (calc[0] in list_letter[0:100] + list_letter[10000:10099]
                     and calc[1] in list_letter[0:100] +
@@ -58,7 +58,7 @@ def function():
                 result = list_letter[list_num.index(result)]
                 print(result)
                 break
-        elif fnmatch(calc, '* умножить на *') == 1:
+        elif fnmatch(calc, '* умножить на *'):
             calc = calc.split(' умножить на ')
             if (calc[0] in list_letter[0:100] + list_letter[10000:10099]
                     and calc[1] in list_letter[0:100] +
@@ -68,7 +68,7 @@ def function():
                 result = list_letter[list_num.index(result)]
                 print(result)
                 break
-        elif fnmatch(calc, '* минус *') == 1:
+        elif fnmatch(calc, '* минус *'):
             calc = calc.split(' минус ', 1)
             if (calc[0] in list_letter[0:100] + list_letter[10000:10099]
                     and calc[1] in list_letter[0:100] +
@@ -76,6 +76,20 @@ def function():
                 result = (list_num[list_letter.index(calc[0])] -
                           list_num[list_letter.index(calc[1])])
                 result = list_letter[list_num.index(result)]
+                print(result)
+                break
+        elif fnmatch(calc, '* разделить на *'):
+            calc = calc.split(' разделить на ', 1)
+            if (calc[0] in list_letter[0:100] + list_letter[10000:10099]
+                    and calc[1] in list_letter[0:100] +
+                    list_letter[10000:10099]):
+                result = (list_num[list_letter.index(calc[0])] /
+                          list_num[list_letter.index(calc[1])])
+                result = round(result, 3)
+                res_split = str(result).split('.')
+                result = (list_letter[list_num.index(int(res_split[0]))] +
+                          ' и ' +
+                          list_letter[list_num.index(int(res_split[1]))])
                 print(result)
                 break
         else:
