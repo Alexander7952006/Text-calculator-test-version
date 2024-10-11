@@ -89,7 +89,8 @@ def function():
                 res_split = str(result).split('.')
                 result = (list_letter[list_num.index(int(res_split[0]))] +
                           ' и ' +
-                          list_letter[list_num.index(int(res_split[1]))])
+                          list_letter[list_num.index(int(res_split[1]))] +
+                          ' тысячных')
                 print(result)
                 break
         else:
