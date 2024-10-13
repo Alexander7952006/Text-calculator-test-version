@@ -82,11 +82,9 @@ def function():
             else:
                 if (copy.count('умножить на') > 1 or copy.count('плюс') > 1
                     or 'минус плюс' in copy or 'минус умножить на' in copy or
-                    copy.find('минус минус') == 0 or copy.find('плюс минус')
-                    == 0 or copy.find('умножить на минус') == 0 or
-                    copy.find(' ') == 0 or copy.find('плюс умножить на') == 0 or
-                    copy.find('плюс минус') == 0 or 'плюс умножить на' in copy
-                    or 'умножить на плюс' in copy):
+                    copy.find('минус минус') == 0 or copy.find('плюс') == 0 or
+                    copy.find('умножить на') == 0 or copy.find(' ') == 0 or
+                    'плюс умножить на' in copy or 'умножить на плюс' in copy):
                     print('Неправильная последовательность чисел и операций')
                     continue
                 else:    
