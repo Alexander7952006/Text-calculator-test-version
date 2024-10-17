@@ -61,7 +61,6 @@ def function(calc):
             calc = calc.replace(temp[0][1], '.', 1)
             temp = temp[1:]
         calc = calc.split('.')
-        break
     result = 0
     for indx in range(len(calc)):
         if indx == 0 and calc[indx] in list_letter[0:100]:
