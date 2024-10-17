@@ -60,8 +60,8 @@ def function(calc):
             opers.append(temp[0][1])
             calc = calc.replace(temp[0][1], '.', 1)
             temp = temp[1:]
-        calc = calc.split('.')
     result = 0
+    calc = calc.split('.')
     for indx in range(len(calc)):
         if indx == 0 and calc[indx] in list_letter[0:100]:
             result += list_num[list_letter.index(calc[indx])]
