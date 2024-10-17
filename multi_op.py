@@ -73,7 +73,7 @@ def function(calc):
                 result -= list_num[list_letter.index(calc[indx])]
             elif opers[indx - 1] == ' умножить на ':
                 result *= list_num[list_letter.index(calc[indx])]
-    if result in list_num[0:10000]:
+    if result in list_num:
         result = list_letter[list_num.index(result)]
     print(result)
 
