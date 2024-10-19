@@ -144,6 +144,8 @@ def function():
                 result = list_letter[list_num.index(result)]
                 print(result)
                 break
+            else:
+                print('Неправильная запись числа')
         else:
             print('Неправильная последовательность чисел и операций')
             continue
