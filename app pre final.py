@@ -3,7 +3,6 @@ from fnmatch import fnmatch
 
 from math import factorial
 
-
 print('''Здравствуйте, это программа "Текстовый калькулятор". Правила
 стандартных операций(сложение, вычитание и умножение): введите строку формата
 <число> <операция> <число>, где число по модулю меньше 100. Правила для
@@ -109,10 +108,13 @@ def function():
             if calc[0] in case_letter[0:8] and calc[1] in list_letter[0:9]:
                 num1 = list_num[case_letter.index(calc[0])+1]
                 num2 = list_num[list_letter.index(calc[1])]
-                result = factorial(num1) // factorial(num1 - num2)
-                result = list_letter[list_num.index(result)]
-                print(result)
-                break
+                if num1 > num2:
+                    result = factorial(num1) // factorial(num1 - num2)
+                    result = list_letter[list_num.index(result)]
+                    print(result)
+                    break
+                else:
+                    print('Неправильная последовательность чисел и операций')
             else:
                 print('Неправильная запись числа')
                 continue
@@ -122,11 +124,14 @@ def function():
             if calc[0] in case_letter[0:16] and calc[1] in list_letter[0:17]:
                 num1 = list_num[case_letter.index(calc[0])+1]
                 num2 = list_num[list_letter.index(calc[1])]
-                result = factorial(num1) // (factorial(num1 - num2) *
-                                               factorial(num2))
-                result = list_letter[list_num.index(result)]
-                print(result)
-                break
+                if num1 > num2:
+                    result = factorial(num1) // (factorial(num1 - num2) *
+                                                   factorial(num2))
+                    result = list_letter[list_num.index(result)]
+                    print(result)
+                    break
+                else:
+                    print('Неправильная последовательность чисел и операций')
             else:
                 print('Неправильная запись числа')
                 continue
