@@ -22,6 +22,7 @@ def function(calc):
            'четырнадцати': 14, 'пятнадцати': 15}
                 
     opers = []
+    end_len = len(opers) - opers.count(' умножить на ')
     while (calc.count(' плюс ') + calc.count(' минус ') +
            calc.count(' умножить на ')) > 0:
         temp = []
@@ -36,22 +37,44 @@ def function(calc):
             opers.append(temp[0][1])
             calc = calc.replace(temp[0][1], '.', 1)
             temp = temp[1:]
-    result = 0
     calc = calc.split('.')
+    
     for indx in range(len(calc)):
-        if indx == 0 and calc[indx] in list_letter[0:100]:
-            result += list_num[list_letter.index(calc[indx])]
-        elif calc[indx] in list_letter[0:100] and indx > 0:
-            if opers[indx - 1] == ' плюс ':
-                result += list_num[list_letter.index(calc[indx])]
-            elif opers[indx - 1] == ' минус ':
-                result -= list_num[list_letter.index(calc[indx])]
-            elif opers[indx - 1] == ' умножить на ':
-                result *= list_num[list_letter.index(calc[indx])]
-    if result in list_num:
-        result = list_letter[list_num.index(result)]
-    print(result)
-
+        calc[indx] = calc[indx].split(' ')
+        count = 0
+        argument = 1
+        for num in calc[indx]:
+            if num in dct:
+                count += dct[num]
+            else:
+                argument = 0
+                print('Ощибка ввода')
+                break
+        if argument == 1:
+            calc[indx] = count
+            
+    arg_type = 1
+    for num in calc:
+        if type(num) != int:
+            arg_type = 0
+            break
+        
+    result = 0
+    if arg_type == 1:
+        while ' умножить на ' in opers:
+            indx = opers.index(' умножить на ')
+            opers.pop(indx)
+            calc[indx: indx + 2] = [calc[indx] * calc[indx + 1]]
+        for indx in range(len(calc)):
+            if indx == 0 and calc[indx] in range(0, 100):
+                result += calc[indx]
+            elif calc[indx] in range(0, 100) and indx > 0:
+                if opers[indx - 1] == ' плюс ':
+                    result += calc[indx]
+                elif opers[indx - 1] == ' минус ':
+                    result -= calc[indx]
+        print(result)
+        
 
 function(input('Введите выражение: '))
 input('Введите Enter для выхода')
