@@ -22,23 +22,21 @@ def function(calc):
            'четырнадцати': 14, 'пятнадцати': 15}
                 
     opers = []
-    end_len = len(opers) - opers.count(' умножить на ')
-    while (calc.count(' плюс ') + calc.count(' минус ') +
-           calc.count(' умножить на ')) > 0:
-        temp = []
-        if ' плюс ' in calc:
-            temp.append([calc.index(' плюс '), ' плюс '])
-        if ' минус ' in calc:
-            temp.append([calc.index(' минус '), ' минус '])
-        if ' умножить на ' in calc:
-            temp.append([calc.index(' умножить на '), ' умножить на '])
-        temp = sorted(temp, key=lambda x: x[0])
-        while len(temp) > 0:
-            opers.append(temp[0][1])
-            calc = calc.replace(temp[0][1], '.', 1)
-            temp = temp[1:]
-    calc = calc.split('.')
-    
+    temp = []
+    while ' умножить на ' in calc:
+        temp.append([calc.index(' умножить на '), ' умножить на '])
+        calc = calc.replace('умножить на ', '', 1)
+    while ' плюс ' in calc:
+        temp.append([calc.index(' плюс '), ' плюс '])
+        calc = calc.replace('плюс ', '', 1)
+    while ' минус ' in calc:
+        temp.append([calc.index(' минус '), ' минус '])
+        calc = calc.replace('минус ', '', 1)
+    temp = sorted(temp, key=lambda x: x[0])
+    for oper in temp:
+        opers.append(oper[1])
+        
+    calc = calc.split()
     for indx in range(len(calc)):
         calc[indx] = calc[indx].split(' ')
         count = 0
@@ -63,7 +61,6 @@ def function(calc):
             if num > 99:
                 arg_type = 0
                 break
-  
     result = 0
     if arg_type == 1:
         while ' умножить на ' in opers:
@@ -71,9 +68,9 @@ def function(calc):
             opers.pop(indx)
             calc[indx: indx + 2] = [calc[indx] * calc[indx + 1]]
         for indx in range(len(calc)):
-            if indx == 0 and calc[indx] in range(0, 10000):
+            if indx == 0:
                 result += calc[indx]
-            elif calc[indx] in range(0, 10000) and indx > 0:
+            elif indx > 0:
                 if opers[indx - 1] == ' плюс ':
                     result += calc[indx]
                 elif opers[indx - 1] == ' минус ':
@@ -83,18 +80,24 @@ def function(calc):
         if str(result)[0] == '-':
             output += 'минус '
             result = abs(result)
-        for step in range(len(str(result))):
-            pieces.append(result % int('1' + '0' * (step + 1)))
-            result -= result % int('1' + '0' * (step + 1))
-        for _ in range(pieces.count(0)):
-            pieces.remove(0)
-        pieces = pieces[:: -1]
-        for num in pieces:
-                for key in dct:
-                    if num == dct[key]:
-                        output += key + ' '
-        output = output.strip()
-        print(output)
+        if result < 10000:
+            for step in range(len(str(result))):
+                pieces.append(result % int('1' + '0' * (step + 1)))
+                result -= result % int('1' + '0' * (step + 1))
+            for _ in range(pieces.count(0)):
+                pieces.remove(0)
+            pieces = pieces[:: -1]
+            for num in pieces:
+                    for key in dct:
+                        if num == dct[key]:
+                            output += key + ' '
+            output = output.strip()
+            print(output)
+        else:
+            print('Ошибка ввода')
+    else:
+        print('ошибка ввода')
+
 
 function(input('Введите выражение: '))
 input('Введите Enter для выхода')
