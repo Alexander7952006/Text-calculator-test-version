@@ -22,20 +22,19 @@ def function(calc):
            'четырнадцати': 14, 'пятнадцати': 15}
                 
     opers = []
-    temp = []
-    while ' умножить на ' in calc:
-        temp.append([calc.index(' умножить на '), ' умножить на '])
-        calc = calc.replace('умножить на ', '', 1)
-    while ' плюс ' in calc:
-        temp.append([calc.index(' плюс '), ' плюс '])
-        calc = calc.replace('плюс ', '', 1)
-    while ' минус ' in calc:
-        temp.append([calc.index(' минус '), ' минус '])
-        calc = calc.replace('минус ', '', 1)
-    temp = sorted(temp, key=lambda x: x[0])
-    for oper in temp:
-        opers.append(oper[1])
-        
+    while ' умножить на ' in calc or ' плюс ' in calc or ' минус ' in calc:
+        op_dict = {}
+        if ' умножить на ' in calc:
+            op_dict[' умножить на '] = calc.index(' умножить на ')
+        if ' плюс ' in calc:
+            op_dict[' плюс '] = calc.index(' плюс ')
+        if ' минус ' in calc:
+            op_dict[' минус '] = calc.index(' минус ')
+        op_dict = sorted(op_dict.items(), key = lambda item: item[1])
+        for indx in range(len(op_dict)):
+            calc = calc.replace(op_dict[indx][0][:-1], '', 1)
+            opers.append(op_dict[indx][0])
+
     calc = calc.split()
     for indx in range(len(calc)):
         calc[indx] = calc[indx].split(' ')
