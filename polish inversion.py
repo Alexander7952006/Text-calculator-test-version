@@ -43,10 +43,13 @@ def function(calc):
         calc[indx] = calc[indx].replace('******', 'минус ')
         
     for indx in range(len(calc)):
-        calc[indx] = calc[indx].split()
         minus = 0
         count = 0
-        argument = 1
+        if indx == 0 and calc[indx] == ' ':
+            argument = 0
+        else:
+            argument = 1
+        calc[indx] = calc[indx].split()
         for num in calc[indx]:
             if num in dct:
                 count += dct[num]
