@@ -92,24 +92,25 @@ def function(calc):
         if str(result)[0] == '-':
             output += 'минус '
             result = abs(result)
-        if 19 < result < 10000:
+        if result < 10000:
             for step in range(len(str(result))):
                 pieces.append(result % int('1' + '0' * (step + 1)))
                 result -= result % int('1' + '0' * (step + 1))
             for _ in range(pieces.count(0)):
                 pieces.remove(0)
             pieces = pieces[:: -1]
-            print(pieces)
+            for indx in range(len(pieces)):
+                if indx < len(pieces) - 1 and pieces[indx] == 10:
+                    pieces[indx] += pieces[indx + 1]
+                    pieces[indx + 1] = '?'
+            while '?' in pieces:
+                pieces.remove('?')
+                    
             for num in pieces:
                     for key in dct:
                         if num == dct[key]:
                             output += key + ' '
             output = output.strip()
-            print(output)
-        elif 0 <= result < 20:
-            for key in dct:
-                if result == dct[key]:
-                    output += key
             print(output)
         else:
             print('Ошибка ввода')
