@@ -26,6 +26,13 @@ def function(calc):
     calc = calc.replace(' плюс минус ', ' плюс ******')
     calc = calc.replace(' минус минус ', ' минус ******')
     op_list = []
+    arg_type = 1
+    if calc.find(' плюс ') == 0:
+        arg_type = 0
+    if calc.find(' минус ') == 0:
+        arg_type = 0
+    if calc.find(' умножить на ') == 0:
+        arg_type = 0
     for indx in range(len(calc)):
         if indx == calc.find(' умножить на ', indx):
             op_list.append([' умножить на ', calc.find(' умножить на ', indx)])
@@ -64,8 +71,6 @@ def function(calc):
             calc[indx] = count
         elif argument == 1 and minus == 1:
             calc[indx] = int('-' + str(count))
-  
-    arg_type = 1
     for num in calc:
         if type(num) != int:
             arg_type = 0
@@ -122,6 +127,6 @@ def function(calc):
     else:
         print('ошибка ввода')       
 
-        
+  
 function(input('Введите выражение: '))
 input('Введите Enter для выхода')
