@@ -54,7 +54,7 @@ def function(calc):
         minus = 0
         count = 0
         argument = 1
-        if calc[0] == '' or len(calc[0]) == calc[0].count(' '):
+        if calc[0] == '' or len(str(calc[0])) == str(calc[0]).count(' '):
             argument = 0
         calc[indx] = calc[indx].split()
         for num in calc[indx]:
