@@ -49,13 +49,14 @@ def function(calc):
     calc = calc.split('?')
     for indx in range(len(calc)):
         calc[indx] = calc[indx].replace('******', 'минус ')
-
+        
+    if calc[0] == '' or len(calc[0]) == calc[0].count(' '):
+        print('Ошибка ввода')
+        return True
     for indx in range(len(calc)):
         minus = 0
         count = 0
         argument = 1
-        if calc[0] == '' or len(str(calc[0])) == str(calc[0]).count(' '):
-            argument = 0
         calc[indx] = calc[indx].split()
         for i in range(1, len(calc[indx])):
             if len(calc[indx][i]) >= len(calc[indx][i-1]):
