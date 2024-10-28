@@ -50,7 +50,7 @@ def function(calc):
     for indx in range(len(calc)):
         calc[indx] = calc[indx].replace('******', 'минус ')
         
-    if calc[0] == '' or len(calc[0]) == calc[0].count(' '):
+    if '' in calc or len(calc[0]) == calc[0].count(' '):
         print('Ошибка ввода')
         return True
     for indx in range(len(calc)):
