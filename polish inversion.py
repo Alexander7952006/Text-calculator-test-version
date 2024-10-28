@@ -57,6 +57,10 @@ def function(calc):
         if calc[0] == '' or len(str(calc[0])) == str(calc[0]).count(' '):
             argument = 0
         calc[indx] = calc[indx].split()
+        for i in range(1, len(calc[indx])):
+            if len(calc[indx][i]) >= len(calc[indx][i-1]):
+                print('Ошибка ввода')
+                return True
         for num in calc[indx]:
             if num in dct:
                 count += dct[num]
