@@ -49,14 +49,13 @@ def function(calc):
     calc = calc.split('?')
     for indx in range(len(calc)):
         calc[indx] = calc[indx].replace('******', 'минус ')
-        
+
     for indx in range(len(calc)):
         minus = 0
         count = 0
-        if indx == 0 and calc[indx] == ' ':
+        argument = 1
+        if calc[0] == '' or len(calc[0]) == calc[0].count(' '):
             argument = 0
-        else:
-            argument = 1
         calc[indx] = calc[indx].split()
         for num in calc[indx]:
             if num in dct:
@@ -127,6 +126,6 @@ def function(calc):
     else:
         print('ошибка ввода')       
 
-  
+
 function(input('Введите выражение: '))
 input('Введите Enter для выхода')
