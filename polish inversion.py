@@ -65,8 +65,8 @@ def function(calc):
                 minus = 1
             else:
                 argument = 0
-                print('Ощибка ввода')
-                break
+                print('Ошибка ввода')
+                return True
         if argument == 1 and minus == 0:
             calc[indx] = count
         elif argument == 1 and minus == 1:
