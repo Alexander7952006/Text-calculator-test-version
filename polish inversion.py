@@ -50,9 +50,13 @@ def function(calc):
     for indx in range(len(calc)):
         calc[indx] = calc[indx].replace('******', 'минус ')
         
-    if '' in calc or len(calc[0]) == calc[0].count(' '):
+    if '' in calc:
         print('Ошибка ввода')
         return True
+    for indx in range(len(calc)):
+        if len(calc[indx]) == calc[indx].count(' '):
+            print('Ошибка ввода')
+            return True 
     for indx in range(len(calc)):
         minus = 0
         count = 0
@@ -84,7 +88,7 @@ def function(calc):
             if abs(num) > 99:
                 arg_type = 0
                 break
-    
+
     result = 0
     if arg_type == 1:
         while ' умножить на ' in opers:
@@ -99,7 +103,7 @@ def function(calc):
                     result += calc[indx]
                 elif opers[indx - 1] == ' минус ':
                     result -= calc[indx]
-
+                    
         output = ''
         pieces = []
         if str(result)[0] == '-':
@@ -126,8 +130,8 @@ def function(calc):
             output = output.strip()
             print(output)
         else:
-            print('Ошибка ввода')
-                    
+            print('Ошибка ввода')   
+            
     else:
         print('ошибка ввода')       
 
