@@ -1,18 +1,9 @@
 from fnmatch import fnmatch
-
 from math import factorial
 
-print('''Здравствуйте, это программа "Текстовый калькулятор". Правила
-стандартных операций(сложение, вычитание и умножение): введите строку формата
-<число> <операция> <число>, где число по модулю меньше 100. Правила для
-сочетания: число <= 16. Правила для размещений и перестановки: число <= 8.''')
 
-
-def function():
+def function(calc):
     """ Функция, принимающая строку от пользователя и возвращающая ответ """
-    case_letter = ['одного', 'двух', 'трех', 'четырех', 'пяти', 'шести',
-                   'семи', 'восьми', 'девяти', 'десяти', 'одиннадцати',
-                   'двенадцати', 'тринадцати', 'четырнадцати', 'пятнадцати']
     list_letter = ['ноль', 'один', 'два', 'три', 'четыре', 'пять', 'шесть',
                    'семь', 'восемь', 'девять', 'десять', 'одиннадцать',
                    'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать',
@@ -24,15 +15,19 @@ def function():
     list_thousand = ['тысяча', 'две тысячи', 'три тысячи', 'четыре тысячи',
                      'пять тысяч', 'шесть тысяч', 'семь тысяч', 'восемь тысяч',
                      'девять тысяч']
+    
+    case_dct = {'одного': 1, 'двух': 2, 'трех': 3, 'четырех': 4, 'пяти': 5,
+           'шести': 6, 'семи': 7, 'восьми': 8, 'девяти': 9, 'десяти': 10,
+           'одиннадцати': 11, 'двенадцати': 12, 'тринадцати': 13,
+           'четырнадцати': 14, 'пятнадцати': 15}
     list_num = []
-
     for ten in list_ten:
         for num in [''] + list_letter[1:10]:
             if num != '':
                 list_letter.append(ten + ' ' + num)
             else:
                 list_letter.append(ten + num)
-
+                
     for hundred in list_hundred:
         for ten in [''] + list_letter[1:100]:
             if ten != '':
@@ -55,101 +50,118 @@ def function():
 
     for num in list_num[1:]:
         list_num.append(int('-' + str(num)))
-
-    while True:
-        calc = input('Введите арифметическую операцию: ')
-        copy = calc
-        if (fnmatch(calc, '* плюс *') or fnmatch(calc, '* умножить на *') or
-                fnmatch(calc, '* минус *')):
-            if ' плюс ' in calc:
-                calc = calc.split(' плюс ')
-                oper = 'плюс'
-            if ' умножить на ' in calc:
-                calc = calc.split(' умножить на ')
-                oper = 'умножение'
-            if ' минус ' in calc:
-                calc = calc.split(' минус ', 1)
-                oper = 'минус'
-            if (calc[0] in list_letter[0:100] + list_letter[10000:10099]
-                    and calc[1] in list_letter[0:100] +
-                    list_letter[10000:10099]):
-                if oper == 'плюс':
-                    result = (list_num[list_letter.index(calc[0])] +
-                              list_num[list_letter.index(calc[1])])
-                    result = list_letter[list_num.index(result)]
-                    print(result)
-                    break
-                elif oper == 'умножение':
-                    result = (list_num[list_letter.index(calc[0])] *
-                              list_num[list_letter.index(calc[1])])
-                    result = list_letter[list_num.index(result)]
-                    print(result)
-                    break
-                elif oper == 'минус':
-                    result = (list_num[list_letter.index(calc[0])] -
-                              list_num[list_letter.index(calc[1])])
-                    result = list_letter[list_num.index(result)]
-                    print(result)
-                    break
-            else:
-                if (copy.count('умножить на') > 1 or copy.count('плюс') > 1
-                        or 'минус плюс' in copy or 'минус умножить на' in copy or
-                        copy.find('минус минус') == 0 or copy.find('плюс') == 0 or
-                        copy.find('умножить на') == 0 or copy.find(' ') == 0 or
-                        'плюс умножить на' in copy or 'умножить на плюс' in copy):
-                    print('Неправильная последовательность чисел и операций')
-                    continue
-                else:
-                    print('Неправильная запись числа')
-                    continue
-        elif fnmatch(calc, 'размещений из * по *'):
+        
+    opers = []
+    calc = calc.replace(' умножить на минус ', ' умножить на ******')
+    calc = calc.replace(' плюс минус ', ' плюс ******')
+    calc = calc.replace(' минус минус ', ' минус ******')
+    op_list = []
+    arg_type = 1
+    if calc.find(' плюс ') == 0:
+        arg_type = 0
+    if calc.find(' минус ') == 0:
+        arg_type = 0
+    if calc.find(' умножить на ') == 0:
+        arg_type = 0
+    if 'размещений' in calc or 'перестановок' in calc or 'сочетаний' in calc:
+        arg = 0
+        if fnmatch(calc, 'размещений из * по *'):
             calc = calc.replace('размещений из ', '')
             calc = calc.split(' по ')
-            if calc[0] in case_letter[0:8] and calc[1] in list_letter[0:9]:
-                num1 = list_num[case_letter.index(calc[0]) + 1]
-                num2 = list_num[list_letter.index(calc[1])]
+            if calc[0] in case_dct and calc[1] in dct:
+                num1 = case_dct[calc[0]]
+                num2 = dct[calc[1]]
                 if num1 > num2:
                     result = factorial(num1) // factorial(num1 - num2)
-                    result = list_letter[list_num.index(result)]
-                    print(result)
-                    break
+                    arg = 1
                 else:
-                    print('Неправильная последовательность чисел и операций')
+                    print('Ошибка ввода')
             else:
-                print('Неправильная запись числа')
-                continue
+                print('Ошибка ввода')
+
         elif fnmatch(calc, 'сочетаний из * по *'):
             calc = calc.replace('сочетаний из ', '')
             calc = calc.split(' по ')
-            if calc[0] in case_letter[0:16] and calc[1] in list_letter[0:17]:
-                num1 = list_num[case_letter.index(calc[0]) + 1]
-                num2 = list_num[list_letter.index(calc[1])]
+            if calc[0] in case_dct and calc[1] in dct:
+                num1 = case_dct[calc[0]]
+                num2 = dct[calc[1]]
                 if num1 > num2:
                     result = factorial(num1) // (factorial(num1 - num2) *
-                                                 factorial(num2))
-                    result = list_letter[list_num.index(result)]
-                    print(result)
-                    break
+                                                   factorial(num2))
+                    arg = 1
                 else:
-                    print('Неправильная последовательность чисел и операций')
+                    print('Ошибка ввода')
             else:
-                print('Неправильная запись числа')
-                continue
+                print('Ошибка ввода')
+ 
         elif fnmatch(calc, 'перестановка * чисел'):
             calc = calc.replace('перестановка ', '')
             calc = calc.replace(' чисел', '')
-            if calc in case_letter[0:8]:
-                num = list_num[case_letter.index(calc) + 1]
+            if calc in case_dct:
+                num = case_dct[calc]
                 result = factorial(num)
-                result = list_letter[list_num.index(result)]
-                print(result)
-                break
+                arg = 1
             else:
-                print('Неправильная запись числа')
+                print('Ошибка ввода')
         else:
-            print('Неправильная последовательность чисел и операций')
-            continue
+            print('Ошибка ввода')
 
+        if arg == 1:
+            if result in list_num:
+                print(list_letter[list_num.index(result)])
+                
+    else:
+        for indx in range(len(calc)):
+            if indx == calc.find(' умножить на ', indx):
+                op_list.append([' умножить на ',
+                                calc.find(' умножить на ', indx)])
+            elif indx == calc.find(' плюс ', indx):
+                op_list.append([' плюс ', calc.find(' плюс ', indx)])
+            elif indx == calc.find(' минус ', indx):
+                op_list.append([' минус ', calc.find(' минус ', indx)])
+        op_list = sorted(op_list, key = lambda x: x[1])
 
-function()
+        for indx in range(len(op_list)):
+            calc = calc.replace(op_list[indx][0], '?', 1)
+            opers.append(op_list[indx][0])
+            
+        calc = calc.split('?')
+        for indx in range(len(calc)):
+            calc[indx] = calc[indx].replace('******', 'минус ')
+            
+        if '' in calc:
+            print('Ошибка ввода')
+            return True
+        for indx in range(len(calc)):
+            if len(calc[indx]) == calc[indx].count(' '):
+                print('Ошибка ввода')
+                return True 
+        for indx in range(len(calc)):
+            if calc[indx] in list_letter[0:100] + list_letter[10000:10099]:
+                calc[indx] = list_num[list_letter.index(calc[indx])]
+            else:
+                print('Ошибка ввода')
+                return True
+            
+        result = 0    
+        while ' умножить на ' in opers:
+                indx = opers.index(' умножить на ')
+                opers.pop(indx)
+                calc[indx: indx + 2] = [calc[indx] * calc[indx + 1]]
+        for indx in range(len(calc)):
+            if indx == 0:
+                result += calc[indx]
+            elif indx > 0:
+                if opers[indx - 1] == ' плюс ':
+                    result += calc[indx]
+                elif opers[indx - 1] == ' минус ':
+                    result -= calc[indx]
+                    
+        if result in list_num:
+            print(list_letter[list_num.index(result)])
+        else:
+            print('Ошибка ввода') 
+               
+
+function(input('Введите выражение: '))
 input('Введите Enter для выхода')
